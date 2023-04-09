@@ -1,12 +1,13 @@
 <template>
     <el-dialog
     v-model="dialogVisible"
-    width="70%"
+    :fullscreen="false"
+    :width="700"
     :before-close="handleClose"
   >
     <div class="pdf-preview" v-if="dialogVisible">
         <div class="pdf-wrap">
-            <vue-pdf-embed :source="state.source" :height="700"  :style="scale" class="vue-pdf-embed" :page="state.pageNum" />
+            <vue-pdf-embed :source="state.source"  :style="scale" class="vue-pdf-embed" :page="state.pageNum" />
         </div>
         <div class="page-tool">
             <div class="page-tool-item" @click="lastPage">上一页</div>
@@ -44,16 +45,14 @@ const dialogVisible=computed({
 const state = reactive({
     source: '', //预览pdf文件地址
     pageNum: 1, //当前页面
-    scale: 1.5, // 缩放比例
+    scale: 1, // 缩放比例
     numPages: 0, // 总页数
 });
 
 
 const handleClose=()=>{
-//   state.source=''
-//   state.pageNum=1
-//   state.scale=1.5
-  state.numPages=undefined
+  state.pageNum=1
+  state.numPages=0
   dialogVisible.value=false
 }
 
@@ -100,7 +99,6 @@ defineExpose({
 </script>
 
 <style lang="css" scoped>
-
 .pdf-preview {
     position: relative;
     height: 100vh;
@@ -113,7 +111,7 @@ defineExpose({
 }
 .vue-pdf-embed {
     text-align: center;
-    width: 515px;
+    width: 515px;   
     border: 1px solid #e5e5e5;
     margin: 0 auto;
     box-sizing: border-box;

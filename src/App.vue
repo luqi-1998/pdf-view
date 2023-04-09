@@ -2,17 +2,20 @@
 // import HelloWorld from './components/HelloWorld.vue'
 import { ref } from "vue";
 import PDFView from "./components/pdfPreview.vue"
+import PDFIframe from "./components/pdfIframe.vue"
 const jsPdf=ref('')
 const fileList=ref([])
 const pdfRef=ref(null)
 const pdfViewPopup=ref(false)
+const pdfIframePopup=ref(false)
 const handleBeforeUpload=(file)=>{
   console.log(file);
   console.log(window.URL.createObjectURL(file));
   // setTimeout(()=>{
-    // jsPdf.value=window.URL.createObjectURL(new Blob([file], {type: 'application/pdf'}))
-    pdfViewPopup.value=true
-    pdfRef.value?.loadingPdf(file)
+    jsPdf.value=window.URL.createObjectURL(new Blob([file], {type: 'application/pdf'}))
+    pdfIframePopup.value=true
+    // pdfViewPopup.value=true
+    // pdfRef.value?.loadingPdf(file)
   // },5000)
     return false
 }
@@ -44,6 +47,7 @@ const handleError=(file)=>{
     </template>
   </el-upload>
    <PDFView v-model="pdfViewPopup" ref="pdfRef" :pdfUrl="jsPdf"/>
+   <PDFIframe v-model="pdfIframePopup" ref="pdfRef1" :pdfUrl="jsPdf"/>
   <!-- <div>
     <a href="https://vitejs.dev" target="_blank">
       <img src="/vite.svg" class="logo" alt="Vite logo" />
